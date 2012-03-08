@@ -326,9 +326,7 @@
                             .text(adjacent_mine_count);
                 }
             }
-
-            this._set_map_at(index, 0);   //set to inactive
-
+            square_element.unbind('click');
         },
         _flash_mines:function() {
             var square_element;
