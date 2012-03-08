@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Straight of Hormuz Minesweeper</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/minesweeper.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  </head>
+  <body>
+  <div class="container">
+
+    <div class="thumbnail" style="width: 800px"> <!--next ver:Get the right size image so it looks perfect in grid. -->
+      <h1 class="center">Strait of Hormuz Minesweeper Game <sup>Alpha</sup></h1>
+      <h3 class="center">Use right-click to flag tiles</h3>
+      <div class="row">
+        <div class="span4">
+          <div class="btn-toolbar">
+            <div class="btn-group">
+              <a class="btn btn-success dropdown-toggle btn-large" data-toggle="dropdown" href="#" id="new_game">
+                <i class="icon-refresh"></i>
+                New Game
+              </a>
+            </div>
+            <div class="btn-group">
+              <a class="btn btn-info dropdown-toggle btn-large" data-toggle="dropdown" href="#">
+                Size
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#" data-scale="0.5">Small</a></li>
+                <li><a href="#" data-scale="1">Normal</a></li>
+                <li><a href="#" data-scale="2">Large</a></li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <a class="btn btn-info dropdown-toggle btn-large" data-toggle="dropdown" href="#">
+                Difficulty
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#" data-difficulty="0.5">Easy</a></li>
+                <li><a href="#" data-difficulty="1">Normal</a></li>
+                <li><a href="#" data-difficulty="2">Hard</a></li>
+                <li><a href="#" data-difficulty="3">For Gods Only!</a></li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <a class="btn btn-danger dropdown-toggle btn-large" data-toggle="dropdown" href="#" id="cheat">Cheat</a>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="btn-toolbar">
+
+            <span class="label label-info">Your Progress</span>
+
+            <div class="progress">
+              <div class="bar" style="width:0%" id="progress"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div id="hormuz"></div>
+    </div>
+  </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <!--<script type='text/javascript' src='http://static.firebase.com/v0/firebase.js'></script>-->
+    <script src="js/minesweeper.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(function () {
+//        var db = new Firebase('http://angelhack.firebase.com/minesweeper');
+        $('#hormuz').minesweeper({
+          scale:1,
+          score_update:update_score
+        });
+
+        $('.dropdown-toggle').dropdown();
+
+        //handle scaling
+        $('a[data-scale]').click(function() {
+          $('#hormuz').minesweeper('option','scale', parseFloat(this.getAttribute('data-scale')))
+        });
+
+        //handle difficulty setting
+        $('a[data-difficulty]').click(function () {
+          $('#hormuz').minesweeper('option', 'difficulty', parseFloat(this.getAttribute('data-difficulty')))
+        });
+
+        //handle new game
+        $('#new_game').click(function() {
+          $('#hormuz').minesweeper("new_game");
+        });
+
+        //handle cheat-a little hand
+        $('#cheat').click(function () {
+          $('#hormuz').minesweeper("cheat");
+        });
+
+        function update_score(score, max) {
+          $('#progress').attr('style', "width:" + ((score/max) * 100) + "%");
+        }
+      });
+    </script>
+  </body>
+</html>

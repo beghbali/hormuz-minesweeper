@@ -1,0 +1,76 @@
+.canvas {
+    background: url(../images/hormuz.png) no-repeat;
+    background-size: 800px 800px;
+    -moz-background-size: 800px 800px;
+}
+
+.canvas ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.canvas .grid-square {
+    float: left;
+    border: 1px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.canvas .grid-square .btn{
+    width:inherit;
+    height:inherit;
+}
+
+.canvas .active {
+    border-style: inset;
+}
+
+.canvas .inactive {
+    background-color: #f5f5dc;
+    opacity: 0.5;
+    border-style: solid;
+    border-color: #f5f5dc;
+}
+
+.canvas .active > a {
+    text-decoration: none;
+    color: whiteSmoke;
+    padding: 0;
+    margin: 0;
+}
+.canvas .active > a:hover {
+    cursor: url(../images/sweeper-ship.ani), url(../images/sweeper-ship.gif) auto;
+}
+
+.canvas .mark {
+    background: #f5f5f5 url(../images/flag.jpeg) no-repeat center;
+}
+
+.canvas .mine {
+    background: red url(../images/mine.png) no-repeat center;
+}
+
+.canvas .invisible {
+    opacity: 1.0;
+}
+.canvas .close_to_1 {
+    color: blue;
+}
+
+.canvas .close_to_2 {
+    color: green;
+}
+
+.canvas .close_to_3 {
+    color: red;
+}
+
+.canvas .close_to_4, .close_to_5, .close_to_6, .close_to_7, .close_to_8 {
+    color: #ff00ff;
+}
+
+.center {
+    text-align: center;
+}
