@@ -93,6 +93,7 @@
                 this._interpolate_map(this.options.scale);
             }
             this._reset_globals();
+            this._update_score();
 
             if (this._good_map()) {
                 this._create_grid(canvas);
@@ -108,7 +109,7 @@
             var mines = 0;
             var number_of_active_squares;
 
-            this.active_squares = this._get_active_squares();
+            this._set_active_squares();
             number_of_active_squares = this.active_squares.length;
 
             //generate enough mines = density * number_of_active_squares
@@ -118,15 +119,14 @@
                 mines++;
             }
         },
-        _get_active_squares:function () {
-            var active_squares = [];
+        _set_active_squares:function () {
+            this.active_squares = [];
 
             for (var square = 0; square < (this.rows * this.columns); square++) {
                 if (this._get_map_at(square) > 0) {
-                    active_squares.push(square);
+                    this.active_squares.push(square);
                 }
             }
-            return active_squares;
         },
         //so we can use it for flagging
         _disable_right_click_menu:function() {
@@ -289,7 +289,12 @@
                             return ((neighbor > 0) && (neighbor != minesweep.hidden_items.mine));
                         });
 
-                queue = $.unique(queue.concat(adjacent_squares));
+                queue = _.uniq(queue.concat(adjacent_squares));
+            }
+        },
+        _deactivate_square:function(index) {
+            if (this._get_map_at(index) == 1) {
+                this._set_map_at(index, 0);     //deactivate
             }
         },
         _get_square_element:function(index) {
@@ -308,10 +313,8 @@
 
             this.cleared++;
 
-            //call the score update callback, in case there is one registered
-            if (this.options.score_update) {
-                this.options.score_update(this.cleared, this._number_of_clearable_squares());
-            }
+            this._update_score();
+
             //goodbye good ol clickable times...
             square_element.find("a").filter(":first").remove();
 
@@ -327,6 +330,13 @@
                 }
             }
             square_element.unbind('click');
+            this._deactivate_square(index);
+        },
+        _update_score:function() {
+            //call the score update callback, in case there is one registered
+            if (this.options.score_update) {
+                this.options.score_update(this.cleared, this._number_of_clearable_squares());
+            }
         },
         _flash_mines:function() {
             var square_element;
